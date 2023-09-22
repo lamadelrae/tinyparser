@@ -7,6 +7,15 @@ public class Parser
     private readonly string _expression;
     private int index;
 
+    private static char[] OperatorChars =
+    {
+        'O',
+        'R',
+        'A',
+        'N',
+        'D'
+    };
+
     public Parser(string expression)
     {
         this._expression = expression;
@@ -101,10 +110,12 @@ public class Parser
     private string ReadOperator()
     {
         int start = index;
-        while (index < _expression.Length && (_expression[index] == 'O' || _expression[index] == 'R' || _expression[index] == 'A' || _expression[index] == 'N' || _expression[index] == 'D'))
+
+        while (index < _expression.Length && OperatorChars.Contains(_expression[index]))
         {
             index++;
         }
+
         return _expression[start..index];
     }
 }
