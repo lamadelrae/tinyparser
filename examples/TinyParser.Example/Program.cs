@@ -1,25 +1,19 @@
 ﻿using TinyParser.Core;
 
-string expression = "(field1:eq:value1 OR (field2:gt:value2 AND field3:lt:value3)) AND (field4:lt:value4)";
-ExpressionParser parser = new ExpressionParser(expression);
-ExpressionNode root = parser.Parse();
-PrintExpressionTree(root, 0);
+var expression = LambaFactory.Produce<Person>("(Name:like:*ew)");
 
-static void PrintExpressionTree(ExpressionNode node, int indentLevel)
+var list = new List<Person>
 {
-    string indent = new(' ', indentLevel * 4);
+    new Person () { Name = "Matthew", Age = 18 },
+    new Person () { Name = "Lucas", Age = 10 }
+};
 
-    if (node.Operator != null)
-    {
-        Console.WriteLine($"{indent}Operator: {node.Operator}");
-    }
-    else
-    {
-        Console.WriteLine($"{indent}Field: {node.Field}, Comparator: {node.Comparator}, Value: {node.Value}");
-    }
+var result = list.Where(expression);
 
-    foreach (var child in node.Children)
-    {
-        PrintExpressionTree(child, indentLevel + 1);
-    }
+foreach (var person in result) Console.WriteLine(person.Name);
+
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
 }

@@ -2,50 +2,36 @@
 
 using System.Collections.Generic;
 
-public class ExpressionNode
+public class Parser
 {
-    public string Operator { get; set; }
-    public string Field { get; set; }
-    public string Comparator { get; set; }
-    public string Value { get; set; }
-    public List<ExpressionNode> Children { get; set; }
-
-    public ExpressionNode()
-    {
-        Children = new List<ExpressionNode>();
-    }
-}
-
-public class ExpressionParser
-{
-    private readonly string expression;
+    private readonly string _expression;
     private int index;
 
-    public ExpressionParser(string expression)
+    public Parser(string expression)
     {
-        this.expression = expression;
+        this._expression = expression;
         this.index = 0;
     }
 
-    public ExpressionNode Parse()
+    public TreeNode Parse()
     {
         return ParseExpression();
     }
 
-    private ExpressionNode ParseExpression()
+    private TreeNode ParseExpression()
     {
         var node = ParseTerm();
 
-        while (index < expression.Length && expression[index] == ' ')
+        while (index < _expression.Length && _expression[index] == ' ')
         {
             index++;
             string op = ReadOperator();
             index++;
-            ExpressionNode right = ParseTerm();
-            var newRoot = new ExpressionNode
+            TreeNode right = ParseTerm();
+            var newRoot = new TreeNode
             {
                 Operator = op,
-                Children = new List<ExpressionNode> { node, right }
+                Children = new List<TreeNode> { node, right }
             };
             node = newRoot;
         }
@@ -53,12 +39,12 @@ public class ExpressionParser
         return node;
     }
 
-    private ExpressionNode ParseTerm()
+    private TreeNode ParseTerm()
     {
-        if (expression[index] == '(')
+        if (_expression[index] == '(')
         {
             index++; // Skip '('
-            ExpressionNode node = ParseExpression();
+            TreeNode node = ParseExpression();
             index++; // Skip ')'
             return node;
         }
@@ -71,7 +57,7 @@ public class ExpressionParser
             index++; // skip :
 
             string value = ReadValue();
-            return new ExpressionNode
+            return new TreeNode
             {
                 Field = field,
                 Comparator = comparator,
@@ -83,42 +69,42 @@ public class ExpressionParser
     private string ReadField()
     {
         int start = index;
-        while (index < expression.Length && char.IsLetterOrDigit(expression[index]))
+        while (index < _expression.Length && char.IsLetterOrDigit(_expression[index]))
         {
             index++;
         }
-        return expression[start..index];
+        return _expression[start..index];
     }
 
     private string ReadComparator()
     {
         int start = index;
 
-        while (index < expression.Length && expression[index] != ':')
+        while (index < _expression.Length && _expression[index] != ':')
         {
             index++;
         }
 
-        return expression[start..index];
+        return _expression[start..index];
     }
 
     private string ReadValue()
     {
         int start = index;
-        while (index < expression.Length && expression[index] != ' ' && expression[index] != ')')
+        while (index < _expression.Length && _expression[index] != ' ' && _expression[index] != ')')
         {
             index++;
         }
-        return expression[start..index];
+        return _expression[start..index];
     }
 
     private string ReadOperator()
     {
         int start = index;
-        while (index < expression.Length && (expression[index] == 'O' || expression[index] == 'R' || expression[index] == 'A' || expression[index] == 'N' || expression[index] == 'D'))
+        while (index < _expression.Length && (_expression[index] == 'O' || _expression[index] == 'R' || _expression[index] == 'A' || _expression[index] == 'N' || _expression[index] == 'D'))
         {
             index++;
         }
-        return expression[start..index];
+        return _expression[start..index];
     }
 }
