@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public class Parser
 {
     private readonly string _expression;
-    private int index;
+    private int _index;
 
-    private static char[] OperatorChars =
+    private static readonly char[] OperatorChars =
     {
         'O',
         'R',
@@ -18,8 +18,8 @@ public class Parser
 
     public Parser(string expression)
     {
-        this._expression = expression;
-        this.index = 0;
+        _expression = expression;
+        _index = 0;
     }
 
     public TreeNode Parse()
@@ -31,17 +31,19 @@ public class Parser
     {
         var node = ParseTerm();
 
-        while (index < _expression.Length && _expression[index] == ' ')
+        while (_index < _expression.Length && _expression[_index] == ' ')
         {
-            index++;
+            _index++;
             string op = ReadOperator();
-            index++;
+            _index++;
+
             TreeNode right = ParseTerm();
             var newRoot = new TreeNode
             {
                 Operator = op,
                 Children = new List<TreeNode> { node, right }
             };
+
             node = newRoot;
         }
 
@@ -50,22 +52,24 @@ public class Parser
 
     private TreeNode ParseTerm()
     {
-        if (_expression[index] == '(')
+        if (_expression[_index] == '(')
         {
-            index++; // Skip '('
+            _index++; // Skip '('
             TreeNode node = ParseExpression();
-                index++; // Skip ')'
+            _index++; // Skip ')'
+
             return node;
         }
         else
         {
             string field = ReadField();
 
-            index++; // skip :
+            _index++; // skip :
             string comparator = ReadComparator();
-            index++; // skip :
+            _index++; // skip :
 
             string value = ReadValue();
+
             return new TreeNode
             {
                 Field = field,
@@ -77,45 +81,49 @@ public class Parser
 
     private string ReadField()
     {
-        int start = index;
-        while (index < _expression.Length && char.IsLetterOrDigit(_expression[index]))
+        int start = _index;
+
+        while (_index < _expression.Length && char.IsLetterOrDigit(_expression[_index]))
         {
-            index++;
+            _index++;
         }
-        return _expression[start..index];
+
+        return _expression[start.._index];
     }
 
     private string ReadComparator()
     {
-        int start = index;
+        int start = _index;
 
-        while (index < _expression.Length && _expression[index] != ':')
+        while (_index < _expression.Length && _expression[_index] != ':')
         {
-            index++;
+            _index++;
         }
 
-        return _expression[start..index];
+        return _expression[start.._index];
     }
 
     private string ReadValue()
     {
-        int start = index;
-        while (index < _expression.Length && _expression[index] != ' ' && _expression[index] != ')')
+        int start = _index;
+
+        while (_index < _expression.Length && _expression[_index] != ' ' && _expression[_index] != ')')
         {
-            index++;
+            _index++;
         }
-        return _expression[start..index];
+
+        return _expression[start.._index];
     }
 
     private string ReadOperator()
     {
-        int start = index;
+        int start = _index;
 
-        while (index < _expression.Length && OperatorChars.Contains(_expression[index]))
+        while (_index < _expression.Length && OperatorChars.Contains(_expression[_index]))
         {
-            index++;
+            _index++;
         }
 
-        return _expression[start..index];
+        return _expression[start.._index];
     }
 }
