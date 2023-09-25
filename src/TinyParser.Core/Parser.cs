@@ -1,6 +1,6 @@
 ﻿namespace TinyParser.Core;
 
-using System.Collections.Generic;
+using TinyParser.Core.DataStructures;
 
 public class Parser
 {
@@ -22,14 +22,14 @@ public class Parser
         _index = 0;
     }
 
-    public TreeNode Parse()
+    public Node Parse()
     {
         return ParseExpression();
     }
 
-    private TreeNode ParseExpression()
+    private Node ParseExpression()
     {
-        var node = ParseTerm();
+        Node node = ParseTerm();
 
         while (_index < _expression.Length && _expression[_index] == ' ')
         {
@@ -37,11 +37,13 @@ public class Parser
             string op = ReadOperator();
             _index++;
 
-            TreeNode right = ParseTerm();
-            var newRoot = new TreeNode
+            Node right = ParseTerm();
+
+            var newRoot = new Parent
             {
                 Operator = op,
-                Children = new List<TreeNode> { node, right }
+                Left = node,
+                Right = right,
             };
 
             node = newRoot;
@@ -50,12 +52,12 @@ public class Parser
         return node;
     }
 
-    private TreeNode ParseTerm()
+    private Node ParseTerm()
     {
         if (_expression[_index] == '(')
         {
             _index++; // Skip '('
-            TreeNode node = ParseExpression();
+            Node node = ParseExpression();
             _index++; // Skip ')'
 
             return node;
@@ -70,7 +72,7 @@ public class Parser
 
             string value = ReadValue();
 
-            return new TreeNode
+            return new Leaf
             {
                 Field = field,
                 Comparator = comparator,

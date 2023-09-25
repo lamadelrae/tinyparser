@@ -1,4 +1,4 @@
-﻿using TinyParser.Core;
+﻿using TinyParser.Core.Generators.LINQ;
 
 var expression = LambdaFactory.Produce<Person>("(Name:eq:Teste)");
 
