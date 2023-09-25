@@ -1,11 +1,10 @@
 ﻿namespace TinyParser.Core;
 
-public class LambaFactory
+public class LambdaFactory
 {
     public static Func<T, bool> Produce<T>(string expression)
     {
-        var parser = new Parser(expression);
-        TreeNode root = parser.Parse();
+        var root = new Parser(expression).Parse();
         return RecursiveExpressionFactory.Produce<T>(root);
     }
 }

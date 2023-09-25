@@ -54,7 +54,7 @@ public class Parser
         {
             index++; // Skip '('
             TreeNode node = ParseExpression();
-            index++; // Skip ')'
+                index++; // Skip ')'
             return node;
         }
         else

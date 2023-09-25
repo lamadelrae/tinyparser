@@ -1,11 +1,11 @@
 ﻿using TinyParser.Core;
 
-var expression = LambaFactory.Produce<Person>("(Name:like:*ew)");
+var expression = LambdaFactory.Produce<Person>("(Name:eq:Teste)");
 
 var list = new List<Person>
 {
     new Person () { Name = "Matthew", Age = 18 },
-    new Person () { Name = "Lucas", Age = 10 }
+    new Person () { Name = "Teste", Age = 10 }
 };
 
 var result = list.Where(expression);
