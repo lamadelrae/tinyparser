@@ -26,28 +26,15 @@ public class RecursiveExpressionGenerator
 
         if (node is Leaf leaf)
         {
-            if (leaf.Comparator == "eq")
-            {
-                var fieldExpression = Expression.PropertyOrField(parameter, leaf.Field);
-                var valueExpression = Expression.Constant(leaf.Value);
-                return Expression.Equal(fieldExpression, valueExpression);
-            }
-            else if (leaf.Comparator == "lt")
-            {
-                var fieldExpression = Expression.PropertyOrField(parameter, leaf.Field);
-                var valueExpression = Expression.Constant(leaf.Value);
-                return Expression.LessThan(fieldExpression, valueExpression);
-            }
-            else if (leaf.Comparator == "gt")
-            {
-                var fieldExpression = Expression.PropertyOrField(parameter, leaf.Field);
-                var valueExpression = Expression.Constant(leaf.Value);
-                return Expression.GreaterThan(fieldExpression, valueExpression);
-            }
+            var fieldExpression = Expression.PropertyOrField(parameter, leaf.Field);
+            var valueExpression = Expression.Constant(InferType(leaf.Value));
+
+            if (leaf.Comparator == "eq") return Expression.Equal(fieldExpression, valueExpression);
+            else if (leaf.Comparator == "lt") return Expression.LessThan(fieldExpression, valueExpression);
+            else if (leaf.Comparator == "gt") return Expression.GreaterThan(fieldExpression, valueExpression);
             else if (leaf.Comparator == "like")
             {
-                var fieldExpression = Expression.PropertyOrField(parameter, leaf.Field);
-                var valueExpression = Expression.Constant(leaf.Value.Trim('*'));
+                valueExpression = Expression.Constant(InferType(leaf.Value.Trim('*')));
 
                 MethodInfo? method;
                 if (leaf.Value.StartsWith('*') && leaf.Value.EndsWith('*')) method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
@@ -60,5 +47,14 @@ public class RecursiveExpressionGenerator
         }
 
         throw new NotSupportedException($"Not supported.");
+    }
+
+    private static object InferType(string input)
+    {
+        if (int.TryParse(input, out int intValue)) return intValue;
+        else if (double.TryParse(input, out double doubleValue)) return doubleValue;
+        else if (bool.TryParse(input, out bool boolValue)) return boolValue;
+        else if (DateTime.TryParse(input, out DateTime dateTimeValue)) return dateTimeValue;
+        else return input;
     }
 }

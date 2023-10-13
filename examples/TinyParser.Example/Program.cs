@@ -1,6 +1,6 @@
 ﻿using TinyParser.Core.Generators.LINQ;
 
-var expression = LambdaFactory.Produce<Person>("(Name:eq:Teste)");
+var expression = LambdaFactory.Produce<Person>("(Age:lt:18)");
 
 var list = new List<Person>
 {
