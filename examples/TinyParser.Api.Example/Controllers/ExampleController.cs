@@ -14,6 +14,9 @@ public class ExampleController : Controller
         var people = new List<Person>()
         {
             new Person() { Name = "Matthew", Age = 22 },
+            new Person() { Name = "Sarah", Age = 25 },
+            new Person() { Name = "Diego", Age = 27 },
+            new Person() { Name = "Lerry", Age = 30 },
             new Person() { Name = "Lobato", Age = 21 },
         };
 
