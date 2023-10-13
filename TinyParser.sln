@@ -3,19 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyParser.Core", "src\TinyParser.Core\TinyParser.Core.csproj", "{3730B5EA-A82D-4148-85FD-5C21F2B0E478}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyParser.Core", "src\TinyParser.Core\TinyParser.Core.csproj", "{3730B5EA-A82D-4148-85FD-5C21F2B0E478}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{E8C9DD05-658F-4D71-9947-31EADEA996E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyParser.Example", "examples\TinyParser.Example\TinyParser.Example.csproj", "{4404756E-AD0F-4D28-BB6F-E46F0E3BD769}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyParser.Example", "examples\TinyParser.Example\TinyParser.Example.csproj", "{4404756E-AD0F-4D28-BB6F-E46F0E3BD769}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyParser.Api.Example", "examples\TinyParser.Api.Example\TinyParser.Api.Example.csproj", "{B96C51E0-6C1D-4819-9C5D-9B8741A0F80F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3730B5EA-A82D-4148-85FD-5C21F2B0E478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -26,8 +25,19 @@ Global
 		{4404756E-AD0F-4D28-BB6F-E46F0E3BD769}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4404756E-AD0F-4D28-BB6F-E46F0E3BD769}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4404756E-AD0F-4D28-BB6F-E46F0E3BD769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B96C51E0-6C1D-4819-9C5D-9B8741A0F80F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B96C51E0-6C1D-4819-9C5D-9B8741A0F80F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B96C51E0-6C1D-4819-9C5D-9B8741A0F80F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B96C51E0-6C1D-4819-9C5D-9B8741A0F80F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4404756E-AD0F-4D28-BB6F-E46F0E3BD769} = {E8C9DD05-658F-4D71-9947-31EADEA996E5}
+		{B96C51E0-6C1D-4819-9C5D-9B8741A0F80F} = {E8C9DD05-658F-4D71-9947-31EADEA996E5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1B8194D-0360-489E-8AF2-0AA5FACEDA2C}
 	EndGlobalSection
 EndGlobal
